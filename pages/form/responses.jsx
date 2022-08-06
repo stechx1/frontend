@@ -9,6 +9,7 @@ const Responses = () => {
   return (
     <>
       {JSON.stringify(userResponses)}
+      {/* Can clear all userResponses using localStorage.clear() */}
     </>
   )
 }

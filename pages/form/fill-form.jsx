@@ -42,7 +42,7 @@ const FillForm = () => {
           {inputFields.map((field, index) =>
             field.fieldType !== "select" ? (
               <NewFormItem
-                key={Math.random()}
+                key={index}
                 type={field.fieldType}
                 label={field.fieldName}
                 name={field.fieldName}
@@ -61,7 +61,7 @@ const FillForm = () => {
             )
           )}
           <button
-            onClick={onSubmit}
+            onMouseDown={onSubmit}
             className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
             Submit
