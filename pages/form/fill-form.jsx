@@ -1,36 +1,19 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import AddForm from "../../components/AddForm";
+import Select from "react-select";
 import FormItem from "../../components/FormItem";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const CreateFormPage = () => {
   const [formTitle, setFormTitle] = useLocalStorage("formTitle", "");
   const [fieldTypes, setFieldTypes] = useLocalStorage("inputFields", []);
-  const [inputFields, setInputFields] = useState([
-    { fieldName: "", fieldType: "" },
-  ]);
-  const [addingField, setAddingField] = useState(true);
-  const [submitForm, setSubmitForm] = useState(false);
+  const [inputFields, setInputFields] = useState([]);
   const router = useRouter();
-  const addFields = () => {
-    setAddingField(false);
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setAddingField(false);
-    setSubmitForm(true);
-  }
 
   useEffect(() => {
-    if(submitForm){
-      setFieldTypes(inputFields.filter((input, index) => (
-        index != 0
-      )));
-      router.push("/fill-form")
-    }
-  }, [inputFields])
+    setInputFields(fieldTypes);
+  }, []);
 
   return (
     <div className="container mx-auto min-h-screen flex justify-center items-center">
@@ -41,37 +24,24 @@ const CreateFormPage = () => {
           </button>
         </div>
         <form className="mt-5">
-          <FormItem
-            type={"text"}
-            label="Form Title"
-            name={"form-title"}
-            placeholder=""
-            value={formTitle}
-            onChange={(e) => setFormTitle(e.target.value)}
-          />
-          {inputFields.length > 0 &&
-            inputFields.map((field, index) => (
-              <AddForm
+          <p className="text-2xl text-center mb-8">{formTitle}</p>
+          {inputFields.map((feild, index) =>
+            feild.fieldType !== "select" ? (
+              <FormItem
                 key={index}
-                id={index}
-                setInputFields={setInputFields}
-                inputFields={inputFields}
-                addingField={addingField} setAddingField={setAddingField}
+                type={feild.fieldType}
+                label={feild.fieldName}
+                name={feild.fieldName}
               />
-            ))}
-          <div
-            className="flex items-center mb-5 cursor-pointer"
-            onClick={addFields}
-          >
-            <Image
-              src={"/icons/add-icon.svg"}
-              alt="add-icon"
-              width={"25px"}
-              height="30px"
-            />
-            <p className="ml-2">Add Fields</p>
-          </div>
-          <button onClick={onSubmit}
+            ) : (
+              <div className="mb-8">
+                <p className="text-sm mb-4">{feild.fieldName}</p>
+                <Select />
+              </div>
+            )
+          )}
+          <button
+            onClick={() => ""}
             className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
             Submit

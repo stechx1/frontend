@@ -21,16 +21,14 @@ const CreateFormPage = () => {
     e.preventDefault();
     setAddingField(false);
     setSubmitForm(true);
-  }
+  };
 
   useEffect(() => {
-    if(submitForm){
-      setFieldTypes(inputFields.filter((input, index) => (
-        index != 0
-      )));
-      router.push("/form/fill-form")
+    if (submitForm) {
+      setFieldTypes(inputFields.filter((input, index) => index != 0));
+      router.push("/form/fill-form");
     }
-  }, [inputFields])
+  }, [inputFields]);
 
   return (
     <div className="container mx-auto min-h-screen flex justify-center items-center">
@@ -56,7 +54,8 @@ const CreateFormPage = () => {
                 id={index}
                 setInputFields={setInputFields}
                 inputFields={inputFields}
-                addingField={addingField} setAddingField={setAddingField}
+                addingField={addingField}
+                setAddingField={setAddingField}
               />
             ))}
           <div
@@ -71,7 +70,8 @@ const CreateFormPage = () => {
             />
             <p className="ml-2">Add Fields</p>
           </div>
-          <button onClick={onSubmit}
+          <button
+            onClick={onSubmit}
             className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
             Submit
