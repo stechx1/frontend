@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import AddForm from "../../components/AddForm";
-import FormItem from "../../components/FormItem";
+import AddForm from "../../components/Form/AddForm"
+import FormItem from "../../components/Form/FormItem";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const CreateFormPage = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import FormItem from "./FormItem";
-import Radio from "./Radio";
-import SelectInput from "../components/SelectInput";
+import FormItem from "../Form/FormItem";
+import Radio from "../Form/Radio";
+import SelectInput from "../Form/SelectInput";
 
 const AddForm = ({
   id,
@@ -13,19 +13,28 @@ const AddForm = ({
 }) => {
   const [fieldName, setFieldName] = useState("");
   const [fieldType, setFieldType] = useState("");
-  const [option1, setOption1] = useState({value: "", label: ""});
-  const [option2, setOption2] = useState({value: "", label: ""});
-  const [option3, setOption3] = useState({value: "", label: ""});
+  const [option1, setOption1] = useState({ value: "", label: "" });
+  const [option2, setOption2] = useState({ value: "", label: "" });
+  const [option3, setOption3] = useState({ value: "", label: "" });
   const onFieldTypeChange = (e) => {
     setFieldType(e.target.value);
   };
 
   useEffect(() => {
     if (!addingField) {
-      if(fieldType === "select"){
-        setInputFields([...inputFields, { id, fieldName, fieldType, options: [option1, option2, option3].filter(option => option.value !== "") }]);
+      if (fieldType === "select") {
+        setInputFields([
+          ...inputFields,
+          {
+            id,
+            fieldName,
+            fieldType,
+            options: [option1, option2, option3].filter(
+              (option) => option.value !== ""
+            ),
+          },
+        ]);
       } else {
-
         setInputFields([...inputFields, { id, fieldName, fieldType }]);
       }
       setAddingField(true);
@@ -70,14 +79,32 @@ const AddForm = ({
       </div>
       {fieldType === "select" && (
         <>
-            <div className="relative z-0 w-full group">
-              <SelectInput placeholder={"1"} value={option1.value} onChange={(e) => setOption1({value: e.target.value, label: e.target.value})} />
-              <SelectInput placeholder={"2"} value={option2.value} onChange={(e) => setOption2({value: e.target.value, label: e.target.value})} />
-              <SelectInput placeholder={"3"} value={option3.value} onChange={(e) => setOption3({value: e.target.value, label: e.target.value})} />
-              {/* {options.length > 0 && options.map((option, index) => (
+          <div className="relative z-0 w-full group">
+            <SelectInput
+              placeholder={"1"}
+              value={option1.value}
+              onChange={(e) =>
+                setOption1({ value: e.target.value, label: e.target.value })
+              }
+            />
+            <SelectInput
+              placeholder={"2"}
+              value={option2.value}
+              onChange={(e) =>
+                setOption2({ value: e.target.value, label: e.target.value })
+              }
+            />
+            <SelectInput
+              placeholder={"3"}
+              value={option3.value}
+              onChange={(e) =>
+                setOption3({ value: e.target.value, label: e.target.value })
+              }
+            />
+            {/* {options.length > 0 && options.map((option, index) => (
                 <SelectInput key={index}  placeholder={index + 2} />
               ))} */}
-              {/* <div
+            {/* <div
             className="flex items-center mb-5 cursor-pointer"
             onClick={() => setAddingOption(false)} 
           >
@@ -89,7 +116,7 @@ const AddForm = ({
             />
             <p className="ml-2 text-sm">Add Options</p>
           </div> */}
-            </div>
+          </div>
         </>
       )}
     </div>

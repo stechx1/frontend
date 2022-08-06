@@ -1,14 +1,31 @@
-const FormItem = ({ type, name, placeholder, value, onChange, label }) => {
+import { useState } from "react";
+
+const NewFormItem = ({
+  type,
+  name,
+  placeholder,
+  label,
+  formResponse,
+  setFormResponse,
+  newValue,
+}) => {
+  const onBlur = (e) => {
+    e.preventDefault();
+    setFormResponse({ ...formResponse, [name]: e.target.value });
+  };
+
   return (
     <div className="relative z-0 mb-6 w-full group">
       <input
+        defaultValue={formResponse[name]}
         type={type}
         name={`floating_${name}`}
         id={`floating_${name}`}
         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-pink-600 peer"
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        onBlur={onBlur}
+        value={newValue}
+        // onChange={onChange}
       />
       <label
         htmlFor={`floating_${name}`}
@@ -20,4 +37,4 @@ const FormItem = ({ type, name, placeholder, value, onChange, label }) => {
   );
 };
 
-export default FormItem;
+export default NewFormItem;

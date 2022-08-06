@@ -2,18 +2,32 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import FormItem from "../../components/FormItem";
+import FormItem from "../../components/Form/FormItem";
+import NewFormItem from "../../components/Form/NewFormItem";
+import SelectItem from "../../components/Form/SelectItem";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const CreateFormPage = () => {
+const FillForm = () => {
   const [formTitle, setFormTitle] = useLocalStorage("formTitle", "");
   const [fieldTypes, setFieldTypes] = useLocalStorage("inputFields", []);
   const [inputFields, setInputFields] = useState([]);
+  const [formResponse, setFormResponse] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState("");
+  const [userResponses, setUserResponses] = useLocalStorage("userResponses","");
+  const [newValue, setNewValue] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     setInputFields(fieldTypes);
   }, []);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setUserResponses([...userResponses, formResponse]);
+    localStorage.removeItem("inputFields");
+    localStorage.removeItem("formTitle");
+    router.push('/form/responses')
+  }
 
   return (
     <div className="container mx-auto min-h-screen flex justify-center items-center">
@@ -25,23 +39,29 @@ const CreateFormPage = () => {
         </div>
         <form className="mt-5">
           <p className="text-2xl text-center mb-8">{formTitle}</p>
-          {inputFields.map((feild, index) =>
-            feild.fieldType !== "select" ? (
-              <FormItem
-                key={index}
-                type={feild.fieldType}
-                label={feild.fieldName}
-                name={feild.fieldName}
+          {inputFields.map((field, index) =>
+            field.fieldType !== "select" ? (
+              <NewFormItem
+                key={Math.random()}
+                type={field.fieldType}
+                label={field.fieldName}
+                name={field.fieldName}
+                value={newValue}
+                formResponse={formResponse}
+                setFormResponse={setFormResponse}
               />
             ) : (
-              <div className="mb-8">
-                <p className="text-sm mb-4">{feild.fieldName}</p>
-                <Select options={feild.options} />
-              </div>
+              <SelectItem
+                name={field.fieldName}
+                options={field.options}
+                value={selectedOptions}
+                formResponse={formResponse}
+                setFormResponse={setFormResponse}
+              />
             )
           )}
           <button
-            onClick={() => ""}
+            onClick={onSubmit}
             className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
             Submit
@@ -52,4 +72,4 @@ const CreateFormPage = () => {
   );
 };
 
-export default CreateFormPage;
+export default FillForm;

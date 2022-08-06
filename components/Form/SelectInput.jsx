@@ -1,6 +1,12 @@
 import React from "react";
 
-const SelectInput = ({ type = "text", placeholder, value, onChange, onBlur }) => {
+const SelectInput = ({
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+}) => {
   return (
     <input
       type={type}
