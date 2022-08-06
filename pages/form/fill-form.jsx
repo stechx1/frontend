@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Select from "react-select";
-import FormItem from "../../components/Form/FormItem";
 import NewFormItem from "../../components/Form/NewFormItem";
 import SelectItem from "../../components/Form/SelectItem";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
