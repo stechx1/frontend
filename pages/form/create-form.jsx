@@ -24,6 +24,10 @@ const CreateFormPage = () => {
   };
 
   useEffect(() => {
+    console.log("Form Types", fieldTypes);
+},[fieldTypes]);
+  
+  useEffect(() => {
     if (submitForm) {
       setFieldTypes(inputFields.filter((input, index) => index != 0));
       router.push("/form/fill-form");

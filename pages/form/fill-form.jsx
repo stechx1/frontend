@@ -24,6 +24,7 @@ const FillForm = () => {
     setUserResponses([...userResponses, formResponse]);
     localStorage.removeItem("inputFields");
     localStorage.removeItem("formTitle");
+    console.log("form Response: ", formResponse);
     router.push('/form/responses')
   }
 
@@ -58,12 +59,12 @@ const FillForm = () => {
               />
             )
           )}
-          <button
+          <a
             onMouseUp={onSubmit}
             className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
             Submit
-          </button>
+          </a>
         </form>
       </div>
     </div>
