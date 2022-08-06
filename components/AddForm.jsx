@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import FormItem from "./FormItem";
 import Radio from "./Radio";
 import SelectInput from "../components/SelectInput";
@@ -12,15 +13,21 @@ const AddForm = ({
 }) => {
   const [fieldName, setFieldName] = useState("");
   const [fieldType, setFieldType] = useState("");
-  const [options, setOptions] = useState([]);
-  const [optionNo, setOptionNo] = useState(0);
+  const [option1, setOption1] = useState({value: "", label: ""});
+  const [option2, setOption2] = useState({value: "", label: ""});
+  const [option3, setOption3] = useState({value: "", label: ""});
   const onFieldTypeChange = (e) => {
     setFieldType(e.target.value);
   };
 
   useEffect(() => {
     if (!addingField) {
-      setInputFields([...inputFields, { id, fieldName, fieldType }]);
+      if(fieldType === "select"){
+        setInputFields([...inputFields, { id, fieldName, fieldType, options: [option1, option2, option3].filter(option => option.value !== "") }]);
+      } else {
+
+        setInputFields([...inputFields, { id, fieldName, fieldType }]);
+      }
       setAddingField(true);
     }
   }, [addingField]);
@@ -64,9 +71,24 @@ const AddForm = ({
       {fieldType === "select" && (
         <>
             <div className="relative z-0 w-full group">
-              <SelectInput placeholder={"1"} />
-              <SelectInput placeholder={"2"} />
-              <SelectInput placeholder={"3"}/>
+              <SelectInput placeholder={"1"} value={option1.value} onChange={(e) => setOption1({value: e.target.value, label: e.target.value})} />
+              <SelectInput placeholder={"2"} value={option2.value} onChange={(e) => setOption2({value: e.target.value, label: e.target.value})} />
+              <SelectInput placeholder={"3"} value={option3.value} onChange={(e) => setOption3({value: e.target.value, label: e.target.value})} />
+              {/* {options.length > 0 && options.map((option, index) => (
+                <SelectInput key={index}  placeholder={index + 2} />
+              ))} */}
+              {/* <div
+            className="flex items-center mb-5 cursor-pointer"
+            onClick={() => setAddingOption(false)} 
+          >
+            <Image
+              src={"/icons/add-icon.svg"}
+              alt="add-icon"
+              width={"18px"}
+              height="30px"
+            />
+            <p className="ml-2 text-sm">Add Options</p>
+          </div> */}
             </div>
         </>
       )}

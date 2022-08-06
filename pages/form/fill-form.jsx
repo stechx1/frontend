@@ -36,7 +36,7 @@ const CreateFormPage = () => {
             ) : (
               <div className="mb-8">
                 <p className="text-sm mb-4">{feild.fieldName}</p>
-                <Select />
+                <Select options={feild.options} />
               </div>
             )
           )}
